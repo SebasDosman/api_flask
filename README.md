@@ -25,21 +25,21 @@
 
 3-1. Import and Execute the Migration Script:
 
-    ```bash
-    flask shell
-    from models import CheckList
-    from config import db
-    db.create_all()
-    ```
+   ```bash
+   flask shell
+   from models import CheckList
+   from config import db
+   db.create_all()
+   ```
 
-    If you wish to make changes, you can drop all tables and execute again:
+   If you wish to make changes, you can drop all tables and execute again:
 
-    ```python
-    db.drop_all()
-    db.create_all()
-    ```
+   ```python
+   db.drop_all()
+   db.create_all()
+   ```
 
-    However, please note that this action will delete all tables. Therefore, it's recommended to work with Flask-Migrate for more controlled migrations. You can find detailed information [here].(https://flask-migrate.readthedocs.io/en/latest/index.html).
+   However, please note that this action will delete all tables. Therefore, it's recommended to work with Flask-Migrate for more controlled migrations. You can find detailed information [here].(https://flask-migrate.readthedocs.io/en/latest/index.html).
 
 3-2. Install Flask-Migrate and Execute the Commands:
 
