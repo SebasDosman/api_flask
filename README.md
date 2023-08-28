@@ -10,7 +10,7 @@
         ```
     - For Windows Systems (CMD):
         ```bash
-            set FLASK_APP=main
+        set FLASK_APP=main
         ```     
 
 2. Required Libraries:
@@ -33,6 +33,7 @@
     ```
 
     If you wish to make changes, you can drop all tables and execute again:
+
     ```python
     db.drop_all()
     db.create_all()
@@ -43,19 +44,19 @@
 3-2. Install Flask-Migrate and Execute the Commands:
 
     - Initialize Migrations:
-    ```bash
-    flask db init
-    ```
+        ```bash
+        flask db init
+        ```
 
     - Create a New Migration (this will generate a file with SQL instructions to apply the changes):
-    ```bash
-    flask db migrate -m "First migration"
-    ```
+        ```bash
+        flask db migrate -m "First migration"
+        ```
 
     - Apply the Migration to the Database:
-    ```bash
-    flask db upgrade
-    ```
+        ```bash
+        flask db upgrade
+        ```
 
 4. Running the Project:
 
