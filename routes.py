@@ -26,14 +26,16 @@ api = Api(blueprint,
         )
 
 
-@listCtrlr.route('/')
+@listCtrlr.route('/getAllLists')
 class CheckListDisplay(Resource):
     @listCtrlr.marshal_list_with(listDto)
     def get(self):        
         list = CheckList.query.all()
         
         return list
-    
+
+@listCtrlr.route('/postList')
+class CheckListDisplay(Resource):
     @listCtrlr.expect(createListCommand)
     def post(self):        
         payload = listCtrlr.payload        
@@ -43,7 +45,7 @@ class CheckListDisplay(Resource):
         
         return check_list_schema.dump(newList)
 
-@listCtrlr.route('/<int:id>')
+@listCtrlr.route('/getListById/<int:id>')
 class CheckListInd(Resource):
     @listCtrlr.marshal_with(listDto)
     def get(self, id):                
@@ -53,7 +55,9 @@ class CheckListInd(Resource):
             return check_list_schema.dump(list)
         else:            
             listCtrlr.abort(404, f'List with id { id } does not exist')
-    
+
+@listCtrlr.route('/putList/<int:id>')
+class CheckListInd(Resource):
     @listCtrlr.expect(updateListCommand)
     @listCtrlr.marshal_with(listDto)
     def put(self, id):        
@@ -68,7 +72,9 @@ class CheckListInd(Resource):
             return check_list_schema.dump(list), 201
         else:
             listCtrlr.abort(404, f'List with id { id } does not exist')
-        
+
+@listCtrlr.route('/deleteList/<int:id>')
+class CheckListInd(Resource):
     def delete(self, id):
         list = CheckList.query.get(id)
         
@@ -86,7 +92,7 @@ api.add_namespace(listCtrlr)
 parser = reqparse.RequestParser()
 parser.add_argument('listId', type = int, help = 'Filter tasks by list ID')
 
-@taskCtrlr.route('/')
+@taskCtrlr.route('/getAllTasks')
 class TodosDisplay(Resource):
     @taskCtrlr.marshal_list_with(taskDto)
     def get(self):
@@ -99,7 +105,9 @@ class TodosDisplay(Resource):
             tasks = Task.query.all()
         
         return tasks
-    
+
+@taskCtrlr.route('/postTask')
+class TodosDisplay(Resource):
     @taskCtrlr.expect(createTaskCommand)
     def post(self):
         payload = taskCtrlr.payload        
@@ -115,7 +123,7 @@ class TodosDisplay(Resource):
         else:
             taskCtrlr.abort(404, f'List with id { list_id } does not exist')
 
-@taskCtrlr.route('/<int:id>')
+@taskCtrlr.route('/getTaskById/<int:id>')
 class Todo(Resource):
     @taskCtrlr.marshal_with(taskDto)
     def get(self, id):
@@ -124,7 +132,9 @@ class Todo(Resource):
             return task_schema.dump(task)
         else:            
             taskCtrlr.abort(404, f'Task with id { id } does not exist')
-    
+
+@taskCtrlr.route('/putTask/<int:id>')
+class Todo(Resource):
     @taskCtrlr.expect(updateTaskCommand)
     @taskCtrlr.marshal_with(taskDto)
     def put(self, id):        
@@ -147,7 +157,9 @@ class Todo(Resource):
             return task_schema.dump(task), 201
         else:
             taskCtrlr.abort(404, f'Task with id { id } does not exist')
-    
+
+@taskCtrlr.route('/deleteTask/<int:id>')
+class Todo(Resource):
     def delete(self, id):
         task = Task.query.get(id)
         
@@ -162,7 +174,7 @@ class Todo(Resource):
 api.add_namespace(taskCtrlr)
 
 
-@langchainCtrlr.route('/')
+@langchainCtrlr.route('/postLangchain')
 class SendTaskToLangChain(Resource):
     @langchainCtrlr.expect(createlangChainCommand)
     def post(self):        
